@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5f7fa" />
+  <title>Flight Comparison</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header class="topbar"><h1>Flight Comparison</h1><div class="header-actions"><button id="clearAll" class="button quiet">全部清除</button><button id="exportXlsx" class="button primary">匯出 Excel</button></div></header>
+  <main>
+    <section class="upload-panel" id="dropZone">
+      <div class="upload-copy"><div class="upload-icon" aria-hidden="true">↑</div><div><h2>匯入 Trip.com 搜尋結果</h2><p>拖曳 PDF 或另存的 HTML 到這裡，或選取一份或多份檔案。檔案只會在此瀏覽器處理。</p></div></div>
+      <label class="button upload-button">選擇檔案<input id="fileInput" type="file" accept="application/pdf,.pdf,text/html,.html,.htm" multiple hidden /></label>
+      <div id="uploadProgress" class="progress-wrap" hidden><div class="progress-label"><span id="progressText">處理中</span><span id="progressCount">0 / 0</span></div><progress id="progressBar" max="100" value="0"></progress></div>
+      <div id="importLog" class="import-log" aria-live="polite"></div>
+    </section>
+
+    <section id="pendingPanel" class="pending-panel" hidden><div class="section-title"><div><h2>待確認</h2><p>方向或搜尋條件未能可靠辨識，請選擇去程或回程。</p></div></div><div id="pendingList"></div></section>
+
+    <nav class="tabs" aria-label="航程方向"><button class="tab active" data-tab="outbound">Outbound <span id="outboundCount">0</span></button><button class="tab" data-tab="inbound">Inbound <span id="inboundCount">0</span></button></nav>
+    <div id="comparisonGroups" class="groups"></div>
+    <section id="emptyState" class="empty-state"><div class="empty-plane">✈</div><h2>尚未匯入航班</h2><p>上傳一份或多份 Trip.com PDF，即可在這裡整理及比較。</p></section>
+  </main>
+  <div id="dialogBackdrop" class="dialog-backdrop" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><h2 id="dialogTitle"></h2><p id="dialogMessage"></p><div id="dialogExtra"></div><div class="dialog-actions"><button id="dialogCancel" class="button quiet">取消</button><button id="dialogConfirm" class="button primary">確認</button></div></section></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
